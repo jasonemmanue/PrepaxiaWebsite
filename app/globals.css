@@ -1,0 +1,59 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Clair : blanc bleuté ; sombre : bleu roi nuit — comme l'application. */
+:root {
+  --fond: #f4f7ff;
+  --surface: #ffffff;
+  --texte: #0b1640;
+  --texte-doux: #3b4a74;
+  --bord: #d9e1f5;
+}
+.dark {
+  --fond: #061446;
+  --surface: #0c1f63;
+  --texte: #f2f6ff;
+  --texte-doux: #b4c3ee;
+  --bord: #22397f;
+}
+
+html { scroll-behavior: smooth; }
+body { background: var(--fond); color: var(--texte); }
+
+@layer components {
+  .conteneur { @apply mx-auto w-full max-w-6xl px-5 sm:px-8; }
+  .carte {
+    background: var(--surface);
+    border: 1px solid var(--bord);
+    @apply rounded-3xl;
+  }
+  .texte-doux { color: var(--texte-doux); }
+  .bord { border-color: var(--bord); }
+  .surtitre { @apply text-xs font-bold uppercase tracking-[0.18em] text-bleu dark:text-bleu-clair; }
+  .titre-section { @apply mt-3 text-3xl font-extrabold leading-tight sm:text-4xl; }
+  /* Bouton « 3D » : même grammaire que l'application (aplat + tranche). */
+  .bouton {
+    @apply inline-flex items-center justify-center gap-2 rounded-2xl bg-bleu px-6 py-3.5 font-bold text-white transition active:translate-y-[3px];
+    box-shadow: 0 4px 0 #0234c4, 0 14px 24px -12px rgba(15, 79, 224, 0.6);
+  }
+  .bouton:active { box-shadow: 0 1px 0 #0234c4; }
+  .bouton-neutre {
+    background: var(--surface);
+    border: 1px solid var(--bord);
+    @apply inline-flex items-center justify-center gap-2 rounded-2xl px-6 py-3.5 font-bold transition hover:border-bleu;
+  }
+}
+
+/* Vagues animées du héros, comme le fond de l'application. */
+@keyframes vague {
+  0%, 100% { transform: translate(0, 0) rotate(0deg); }
+  50% { transform: translate(18px, -14px) rotate(4deg); }
+}
+.vague { animation: vague 18s ease-in-out infinite; }
+.vague-lente { animation: vague 26s ease-in-out infinite reverse; }
+@media (prefers-reduced-motion: reduce) {
+  .vague, .vague-lente { animation: none; }
+}
+
+.entete-fond { background: color-mix(in srgb, var(--fond) 82%, transparent); }
