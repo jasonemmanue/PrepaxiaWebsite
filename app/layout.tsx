@@ -17,7 +17,7 @@ const SITE = process.env.SITE_URL || 'https://prepaxia.com'
 export const metadata: Metadata = {
   metadataBase: new URL(SITE),
   title: {
-    default: 'Prepaxia — prépare ton concours avec méthode',
+    default: 'Prepaxia : prépare ton concours avec méthode',
     template: '%s · Prepaxia',
   },
   description:
