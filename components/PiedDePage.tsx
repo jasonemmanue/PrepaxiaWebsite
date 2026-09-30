@@ -43,6 +43,7 @@ export default function PiedDePage({ contenu, liens }: { contenu: ContenuSite; l
             {contenu.url_youtube && <li><a href={contenu.url_youtube} className="hover:text-bleu">Chaîne YouTube</a></li>}
             {contenu.url_tiktok && <li><a href={contenu.url_tiktok} className="hover:text-bleu">TikTok</a></li>}
             {contenu.url_facebook && <li><a href={contenu.url_facebook} className="hover:text-bleu">Facebook</a></li>}
+            {contenu.url_linkedin && <li><a href={contenu.url_linkedin} className="hover:text-bleu">LinkedIn</a></li>}
             <li><Link href="/cgu" className="hover:text-bleu">Conditions d&apos;utilisation</Link></li>
             <li><Link href="/confidentialite" className="hover:text-bleu">Confidentialité</Link></li>
           </ul>

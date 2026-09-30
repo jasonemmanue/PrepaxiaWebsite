@@ -42,6 +42,7 @@ export interface ContenuSite {
   url_youtube: string
   url_tiktok: string
   url_facebook: string
+  url_linkedin: string
   cgu: string
   confidentialite: string
 }
@@ -101,6 +102,7 @@ export const CONTENU_VIDE: ContenuSite = {
   url_youtube: '',
   url_tiktok: '',
   url_facebook: '',
+  url_linkedin: '',
   cgu: '',
   confidentialite: '',
 }
