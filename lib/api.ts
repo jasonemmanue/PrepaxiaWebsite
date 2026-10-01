@@ -47,7 +47,10 @@ export interface ContenuSite {
   confidentialite: string
 }
 
-export interface Stats { inscrits: number; concours: number; chapitres: number; ressources: number }
+export interface Stats {
+  inscrits: number; concours: number; chapitres: number; ressources: number
+  lecons?: number; exercices?: number; annales?: number
+}
 
 export interface Matiere { id: string; nom: string; symbole?: string | null }
 export interface Concours {

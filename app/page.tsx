@@ -47,9 +47,12 @@ export default async function Accueil() {
             <dl className="mt-10 grid max-w-lg grid-cols-3 gap-3">
               {[
                 [stats.inscrits, 'candidats inscrits'],
-                [stats.concours, 'concours couverts'],
+                [stats.concours, 'concours et examens'],
                 [stats.chapitres, 'chapitres de cours'],
-              ].map(([n, l]) => (
+                [stats.lecons ?? 0, 'leçons'],
+                [stats.exercices ?? 0, 'exercices corrigés'],
+                [stats.annales ?? 0, 'annales'],
+              ].filter(([n]) => Number(n) > 0).map(([n, l]) => (
                 <div key={String(l)} className="carte px-4 py-3">
                   <dt className="text-2xl font-extrabold">{Number(n).toLocaleString('fr-FR')}</dt>
                   <dd className="text-xs texte-doux">{l}</dd>
@@ -167,7 +170,7 @@ export default async function Accueil() {
               <figure key={t.nom} className="carte p-6">
                 <blockquote className="leading-relaxed">« {t.texte} »</blockquote>
                 <figcaption className="mt-4 text-sm font-semibold">
-                  {t.nom}{t.role ? <span className="font-normal texte-doux"> — {t.role}</span> : null}
+                  {t.nom}{t.role ? <span className="font-normal texte-doux"> : {t.role}</span> : null}
                 </figcaption>
               </figure>
             ))}

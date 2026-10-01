@@ -1,5 +1,5 @@
 // Rend un texte saisi dans l'admin : paragraphes séparés par une ligne vide,
-// « ## » pour un titre, « - » pour une puce. Volontairement simple — le
+// « ## » pour un titre, « - » pour une puce. Volontairement simple : le
 // rédacteur n'a pas à connaître le HTML, et rien n'est injecté tel quel.
 export default function TexteLong({ texte }: { texte: string }) {
   const blocs = texte.split(/\n\s*\n/).map((b) => b.trim()).filter(Boolean)
