@@ -7,17 +7,26 @@ import { Menu, X } from 'lucide-react'
 import BasculeTheme from './BasculeTheme'
 import { lienAndroid, type Liens } from '@/lib/api'
 
+// Pages réelles en tête (2026-10-01) : concours ouverts (admin), CGU,
+// confidentialité, puis les ancres de l'accueil.
 const NAV = [
-  { href: '/#concours', label: 'Concours' },
+  { href: '/concours', label: 'Concours' },
   { href: '/#fonctionnalites', label: 'Fonctionnalités' },
   { href: '/#tarifs', label: 'Tarifs' },
   { href: '/journal', label: 'Journal' },
-  { href: '/#faq', label: 'FAQ' },
+  { href: '/cgu', label: 'CGU' },
+  { href: '/confidentialite', label: 'Confidentialité' },
 ]
+
+/** Application web : lien de l'admin (« Site web »), sinon le vrai domaine. */
+const APP_WEB_DEFAUT = 'https://www.webapp.prepaxia.com/'
+
 
 export default function Entete({ urlAppWeb, liens }: { urlAppWeb: string; liens: Liens }) {
   const [ouvert, setOuvert] = useState(false)
   const telecharger = lienAndroid(liens)
+  const appStore = liens.appstore_url || null
+  const web = urlAppWeb || APP_WEB_DEFAUT
 
   return (
     <header className="sticky top-0 z-40 border-b bord backdrop-blur-xl entete-fond">
@@ -35,16 +44,19 @@ export default function Entete({ urlAppWeb, liens }: { urlAppWeb: string; liens:
         </nav>
         <div className="ml-auto flex items-center gap-2">
           <BasculeTheme />
-          {urlAppWeb && (
-            <a href={urlAppWeb} className="hidden text-sm font-semibold sm:inline texte-doux hover:text-bleu px-2">
-              Se connecter
-            </a>
-          )}
           {telecharger && (
-            <a href={telecharger} className="bouton hidden !py-2 !px-4 text-sm sm:inline-flex">
-              Télécharger
+            <a href={telecharger} className="bouton hidden !py-2 !px-3 text-xs lg:inline-flex">
+              Play Store
             </a>
           )}
+          {appStore && (
+            <a href={appStore} className="bouton-neutre hidden !py-2 !px-3 text-xs lg:inline-flex">
+              App Store
+            </a>
+          )}
+          <a href={web} className="bouton-neutre hidden !py-2 !px-3 text-xs sm:inline-flex">
+            Continuer sur le web
+          </a>
           <button
             className="md:hidden rounded-xl p-2 texte-doux"
             onClick={() => setOuvert((v) => !v)}
@@ -62,12 +74,9 @@ export default function Entete({ urlAppWeb, liens }: { urlAppWeb: string; liens:
               {n.label}
             </Link>
           ))}
-          {urlAppWeb && (
-            <a href={urlAppWeb} className="rounded-xl px-3 py-2.5 font-medium hover:bg-bleu/10">
-              Se connecter à l&apos;app web
-            </a>
-          )}
-          {telecharger && <a href={telecharger} className="bouton mt-2">Télécharger l&apos;application</a>}
+          {telecharger && <a href={telecharger} className="bouton mt-2">Télécharger sur le Play Store</a>}
+          {appStore && <a href={appStore} className="bouton-neutre mt-2">Télécharger sur l&apos;App Store</a>}
+          <a href={web} className="bouton-neutre mt-2">Continuer sur le web</a>
         </nav>
       )}
     </header>

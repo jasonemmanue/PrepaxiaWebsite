@@ -28,12 +28,12 @@ export default function BoutonsStores({ liens, urlAppWeb }: { liens: Liens; urlA
           </span>
         </a>
       )}
-      {urlAppWeb && (
-        <a href={urlAppWeb} className="bouton-neutre">
+      {(urlAppWeb || 'https://www.webapp.prepaxia.com/') && (
+        <a href={urlAppWeb || 'https://www.webapp.prepaxia.com/'} className="bouton-neutre">
           <Globe size={20} />
           <span className="text-left leading-tight">
             <span className="block text-[10px] font-semibold uppercase opacity-70">Sans installer</span>
-            Version web
+            Continuer sur le web
           </span>
         </a>
       )}
