@@ -52,6 +52,7 @@ export default async function Accueil() {
                 [stats.lecons ?? 0, 'leçons'],
                 [stats.exercices ?? 0, 'exercices corrigés'],
                 [stats.annales ?? 0, 'annales'],
+                [stats.heures_utilisation ?? 0, 'heures de révision sur Prepaxia'],
               ].filter(([n]) => Number(n) > 0).map(([n, l]) => (
                 <div key={String(l)} className="carte px-4 py-3">
                   <dt className="text-2xl font-extrabold">{Number(n).toLocaleString('fr-FR')}</dt>

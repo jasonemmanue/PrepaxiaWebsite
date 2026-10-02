@@ -50,6 +50,8 @@ export interface ContenuSite {
 export interface Stats {
   inscrits: number; concours: number; chapitres: number; ressources: number
   lecons?: number; exercices?: number; annales?: number
+  /** Temps total passé dans l'application par les élèves (2026-10-02). */
+  heures_utilisation?: number
 }
 
 export interface Matiere { id: string; nom: string; symbole?: string | null }
