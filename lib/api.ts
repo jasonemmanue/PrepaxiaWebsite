@@ -25,7 +25,7 @@ async function lire<T>(chemin: string, repli: T): Promise<T> {
 
 export interface Fonctionnalite { icone: string; titre: string; texte: string }
 export interface Etape { titre: string; texte: string }
-export interface Temoignage { nom: string; role?: string; texte: string }
+export interface Temoignage { nom: string; role?: string; texte: string; photo?: string }
 export interface QuestionFaq { question: string; reponse: string }
 
 export interface ContenuSite {

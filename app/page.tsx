@@ -169,10 +169,21 @@ export default async function Accueil() {
           <div className="mt-8 grid gap-5 md:grid-cols-3">
             {contenu.temoignages.map((t) => (
               <figure key={t.nom} className="carte p-6">
-                <blockquote className="leading-relaxed">« {t.texte} »</blockquote>
-                <figcaption className="mt-4 text-sm font-semibold">
-                  {t.nom}{t.role ? <span className="font-normal texte-doux"> : {t.role}</span> : null}
-                </figcaption>
+                {/* Photo de profil en rond, en haut à gauche (2026-10-03). */}
+                <div className="flex items-center gap-3">
+                  {t.photo ? (
+                    // eslint-disable-next-line @next/next/no-img-element
+                    <img src={t.photo} alt={t.nom} className="h-12 w-12 shrink-0 rounded-full object-cover" />
+                  ) : (
+                    <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-[#0F4FE0] text-lg font-bold text-white">
+                      {(t.nom || '?').trim().charAt(0).toUpperCase()}
+                    </span>
+                  )}
+                  <figcaption className="text-sm font-semibold">
+                    {t.nom}{t.role ? <span className="block font-normal texte-doux">{t.role}</span> : null}
+                  </figcaption>
+                </div>
+                <blockquote className="mt-4 leading-relaxed">« {t.texte} »</blockquote>
               </figure>
             ))}
           </div>
