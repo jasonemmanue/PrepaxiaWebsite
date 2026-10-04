@@ -211,7 +211,7 @@ export default async function Accueil() {
               </div>
             ))}
           </div>
-          <p className="mt-4 text-sm texte-doux">Paiement par Mobile Money (Orange, MTN, Moov, Wave) dans l&apos;application.</p>
+          <p className="mt-4 text-sm texte-doux">Paiement par Orange Money, MTN MoMo, Wave ou carte bancaire dans l&apos;application.</p>
         </section>
       )}
 
