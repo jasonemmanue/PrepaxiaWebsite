@@ -7,20 +7,27 @@
 // repli : le site reste affichable.
 // ─────────────────────────────────────────────────────────────────────────────
 
-const API = (process.env.API_URL || 'https://excellencia-api-production.up.railway.app')
-  .replace(/\/+$/, '')
-  .replace(/\/api\/v1$/, '')
-const V1 = `${API}/api/v1`
+const nettoyer = (u: string) => u.trim().replace(/\/+$/, '').replace(/\/api\/v1$/, '')
+const API = nettoyer(process.env.API_URL || 'https://excellencia-api-production.up.railway.app')
+// (2026-10-04) Liens de secours : si le lien principal ne répond plus
+// (domaine supprimé), le site lit l'API par le lien définitif.
+const SECOURS = (process.env.API_URLS_SECOURS || 'https://prepaxia-api-production.up.railway.app')
+  .split(',').map(nettoyer).filter(Boolean)
+const BASES = Array.from(new Set([API, ...SECOURS]))
 const REVALIDATION = 300
 
 async function lire<T>(chemin: string, repli: T): Promise<T> {
-  try {
-    const r = await fetch(`${V1}${chemin}`, { next: { revalidate: REVALIDATION } })
-    if (!r.ok) return repli
-    return (await r.json()) as T
-  } catch {
-    return repli
+  for (const base of BASES) {
+    try {
+      const r = await fetch(`${base}/api/v1${chemin}`, { next: { revalidate: REVALIDATION } })
+      if (r.ok) return (await r.json()) as T
+      // 404 « Application not found » de Railway : lien supprimé, on passe au suivant.
+      if (r.status !== 404) return repli
+    } catch {
+      // réseau : lien suivant
+    }
   }
+  return repli
 }
 
 export interface Fonctionnalite { icone: string; titre: string; texte: string }
