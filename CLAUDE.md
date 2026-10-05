@@ -29,3 +29,8 @@ documente les règles et les pièges.
   variables du service sont disponibles au build, nécessaire au pré-rendu.
 - Les captures d'écran de `public/ecrans/` proviennent de l'app 1.7 ; les
   remplacer quand l'interface change.
+
+## 2026-10-05
+- Page `/a-propos` (« À propos de nous ») : texte `a_propos` / `a_propos_titre` de `/site/contenu`, modifiable dans
+  l'admin (Site web). Lien dans le pied de page et le plan du site. `TexteLong` gère `**gras**` (texte React).
+- Lien API par défaut : le lien définitif (`prepaxia-api-production`), plus aucun lien de secours par défaut.
