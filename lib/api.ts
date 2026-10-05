@@ -8,10 +8,10 @@
 // ─────────────────────────────────────────────────────────────────────────────
 
 const nettoyer = (u: string) => u.trim().replace(/\/+$/, '').replace(/\/api\/v1$/, '')
-const API = nettoyer(process.env.API_URL || 'https://excellencia-api-production.up.railway.app')
-// (2026-10-04) Liens de secours : si le lien principal ne répond plus
-// (domaine supprimé), le site lit l'API par le lien définitif.
-const SECOURS = (process.env.API_URLS_SECOURS || 'https://prepaxia-api-production.up.railway.app')
+// (2026-10-05) Lien DÉFINITIF de l'API, seul lien connu du site.
+const API = nettoyer(process.env.API_URL || 'https://prepaxia-api-production.up.railway.app')
+// Liens de secours facultatifs (variable API_URLS_SECOURS), aucun par défaut.
+const SECOURS = (process.env.API_URLS_SECOURS || '')
   .split(',').map(nettoyer).filter(Boolean)
 const BASES = Array.from(new Set([API, ...SECOURS]))
 const REVALIDATION = 300
@@ -51,6 +51,8 @@ export interface ContenuSite {
   url_facebook: string
   url_linkedin: string
   cgu: string
+  a_propos?: string
+  a_propos_titre?: string
   confidentialite: string
 }
 
@@ -116,6 +118,8 @@ export const CONTENU_VIDE: ContenuSite = {
   url_facebook: '',
   url_linkedin: '',
   cgu: '',
+  a_propos: '',
+  a_propos_titre: 'À propos de nous',
   confidentialite: '',
 }
 
