@@ -34,3 +34,4 @@ documente les règles et les pièges.
 - Page `/a-propos` (« À propos de nous ») : texte `a_propos` / `a_propos_titre` de `/site/contenu`, modifiable dans
   l'admin (Site web). Lien dans le pied de page et le plan du site. `TexteLong` gère `**gras**` (texte React).
 - Lien API par défaut : le lien définitif (`prepaxia-api-production`), plus aucun lien de secours par défaut.
+- E-mail du site et de l'app : assistanceprepaxia@gmail.com (par défaut partout : /site/contenu contact_email, /parametres-app email_contact, pied de page du site).

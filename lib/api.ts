@@ -112,7 +112,7 @@ export const CONTENU_VIDE: ContenuSite = {
   etapes: [],
   temoignages: [],
   faq: [],
-  contact_email: '',
+  contact_email: 'assistanceprepaxia@gmail.com',
   url_youtube: '',
   url_tiktok: '',
   url_facebook: '',

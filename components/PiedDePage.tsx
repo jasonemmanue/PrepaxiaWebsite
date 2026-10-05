@@ -3,7 +3,7 @@ import Link from 'next/link'
 import { lienAndroid, type ContenuSite, type Liens } from '@/lib/api'
 
 export default function PiedDePage({ contenu, liens }: { contenu: ContenuSite; liens: Liens }) {
-  const email = contenu.contact_email || liens.email_contact
+  const email = contenu.contact_email || liens.email_contact || 'assistanceprepaxia@gmail.com'
   const android = lienAndroid(liens)
   return (
     <footer className="mt-24 border-t bord">
