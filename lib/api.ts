@@ -54,6 +54,8 @@ export interface ContenuSite {
   a_propos?: string
   a_propos_titre?: string
   confidentialite: string
+  /** (2026-10-17) Page « Supprimer mon compte » (Google Play). */
+  suppression_compte?: string
 }
 
 export interface Stats {
