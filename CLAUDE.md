@@ -35,3 +35,10 @@ documente les règles et les pièges.
   l'admin (Site web). Lien dans le pied de page et le plan du site. `TexteLong` gère `**gras**` (texte React).
 - Lien API par défaut : le lien définitif (`prepaxia-api-production`), plus aucun lien de secours par défaut.
 - E-mail du site et de l'app : assistanceprepaxia@gmail.com (par défaut partout : /site/contenu contact_email, /parametres-app email_contact, pied de page du site).
+
+## 2026-10-17
+- Page **`/supprimer-mon-compte`** exigée par Google Play (sécurité des données) : étapes dans l'app (Profil →
+  Sécurité → Supprimer mon compte), demande par e-mail, données supprimées et conservées. Texte
+  `suppression_compte` de `/site/contenu` (éditable dans l'admin → Site web), repli local si l'API ne le renvoie pas.
+  Ajoutée au plan du site (`sitemap.ts`).
+- CGU : section 11 « Chat du concours : signalement et bannissement » (texte de l'API).
