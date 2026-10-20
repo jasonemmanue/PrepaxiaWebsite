@@ -42,3 +42,17 @@ documente les règles et les pièges.
   `suppression_compte` de `/site/contenu` (éditable dans l'admin → Site web), repli local si l'API ne le renvoie pas.
   Ajoutée au plan du site (`sitemap.ts`).
 - CGU : section 11 « Chat du concours : signalement et bannissement » (texte de l'API).
+
+## 2026-10-20 : ambassadeurs partenaires
+- `/a/[code]` (lien public, rendu à la demande) : code reconnu (casse et tiret libres), visite comptée par l'API
+  (IP du visiteur transmise), boutons Play Store (`referrer=amb=CODE`), App Store, web (`?amb=CODE`) ; code à copier
+  pour l'iPhone. Non indexée.
+- `/devenir-ambassadeur` : règles lues dans `GET /partenaires/config-publique`, formulaire
+  (`components/partenaires/FormulaireCandidature.tsx`, champ piège à robots).
+- `/ambassadeur/[jeton]` : espace privé (`components/partenaires/EspaceAmbassadeur.tsx`) : charte, lien + QR
+  (`qrcode`), règle en vigueur, gains, numéro Mobile Money (demande validée par l'équipe), historique COMPLET des
+  commissions (pages + CSV), élèves, versements. `next.config.mjs` : `Referrer-Policy: no-referrer`,
+  `Cache-Control: no-store`, `X-Robots-Tag: noindex` sur `/ambassadeur/*` (l'adresse est le secret).
+- `app/api/partenaires/[...chemin]/route.ts` : relais vers l'API, **liste blanche** de chemins, corps ≤ 20 Ko,
+  `X-Visiteur-Ip`. `API_BASE` exporté par `lib/api.ts`. `robots.ts` : `/a/`, `/ambassadeur/`, `/api/` exclus.
+- Lien « Devenir ambassadeur » dans le pied de page et le plan du site.
