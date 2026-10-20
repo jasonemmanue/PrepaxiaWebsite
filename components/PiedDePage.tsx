@@ -45,6 +45,7 @@ export default function PiedDePage({ contenu, liens }: { contenu: ContenuSite; l
             {contenu.url_facebook && <li><a href={contenu.url_facebook} className="hover:text-bleu">Facebook</a></li>}
             {contenu.url_linkedin && <li><a href={contenu.url_linkedin} className="hover:text-bleu">LinkedIn</a></li>}
             <li><Link href="/a-propos" className="hover:text-bleu">À propos de nous</Link></li>
+            <li><Link href="/devenir-ambassadeur" className="hover:text-bleu">Devenir ambassadeur</Link></li>
             <li><Link href="/cgu" className="hover:text-bleu">Conditions d&apos;utilisation</Link></li>
             <li><Link href="/confidentialite" className="hover:text-bleu">Confidentialité</Link></li>
           </ul>

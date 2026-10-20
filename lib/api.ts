@@ -14,6 +14,8 @@ const API = nettoyer(process.env.API_URL || 'https://prepaxia-api-production.up.
 const SECOURS = (process.env.API_URLS_SECOURS || '')
   .split(',').map(nettoyer).filter(Boolean)
 const BASES = Array.from(new Set([API, ...SECOURS]))
+/** (2026-10-20) Base de l'API pour les routes qui relaient le navigateur (app/api/partenaires). */
+export const API_BASE = API
 const REVALIDATION = 300
 
 async function lire<T>(chemin: string, repli: T): Promise<T> {

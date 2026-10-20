@@ -12,6 +12,15 @@ const nextConfig = {
         { key: 'X-Frame-Options', value: 'DENY' },
         { key: 'Permissions-Policy', value: 'camera=(), microphone=(), geolocation=()' },
       ],
+    }, {
+      // (2026-10-20) Espace d'un ambassadeur : l'adresse EST le secret. Jamais
+      // transmise à un autre site (Referer), jamais en cache.
+      source: '/ambassadeur/:path*',
+      headers: [
+        { key: 'Referrer-Policy', value: 'no-referrer' },
+        { key: 'Cache-Control', value: 'no-store' },
+        { key: 'X-Robots-Tag', value: 'noindex, nofollow' },
+      ],
     }]
   },
 }
