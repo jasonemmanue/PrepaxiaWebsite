@@ -63,7 +63,13 @@ export default async function LienAmbassadeur({ params }: { params: { code: stri
           </div>
         )}
 
-        <div className="mt-8 flex flex-col gap-3 sm:items-center">
+        {/* (2026-10-21) iPhone / iPad : aucun achat dans l'app ; l'abonnement se prend sur le web. */}
+        <p className="mt-6 text-sm texte-doux">
+          Sur iPhone ou iPad, l’abonnement se prend sur le web (« Continuer sur le web ») et s’active aussitôt dans ton
+          compte, dans l’app iPhone / iPad.
+        </p>
+
+        <div className="mt-6 flex flex-col gap-3 sm:items-center">
           <a href={valide ? r.liens!.android : (liens.playstore_url || 'https://play.google.com/store/apps/details?id=com.prepaxia.app')}
             className="bouton w-full sm:w-80">
             <Smartphone size={20} /> Télécharger sur Google Play
