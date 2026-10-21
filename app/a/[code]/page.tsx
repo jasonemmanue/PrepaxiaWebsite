@@ -17,7 +17,7 @@ import { API_BASE, lireLiens } from '@/lib/api'
 export const dynamic = 'force-dynamic'
 export const metadata: Metadata = {
   title: 'Rejoins Prepaxia',
-  description: 'Cours, annales corrigées, quiz et tuteur IA pour réussir ton concours ou ton BAC.',
+  description: 'Cours, annales corrigées, quiz, Prepaxia AI, Prepaxia Corrector, Prepaxia Generator et bien d’autres surprises pour réussir ton concours ou ton BAC.',
   robots: { index: false, follow: false },
 }
 
@@ -47,7 +47,8 @@ export default async function LienAmbassadeur({ params }: { params: { code: stri
         <p className="surtitre">{valide ? `${r.prenom} t’invite` : 'Bienvenue'}</p>
         <h1 className="titre-section">Prépare ton concours avec Prepaxia</h1>
         <p className="texte-doux mt-3">
-          Cours, annales corrigées, quiz, objectifs du jour et un tuteur IA : tout pour réussir ton concours ou ton BAC.
+          Cours, annales corrigées, quiz, objectifs du jour, Prepaxia AI (ton tuteur IA), Prepaxia Corrector, Prepaxia
+          Generator et bien d’autres surprises : tout pour réussir ton concours ou ton BAC.
         </p>
 
         {valide && (

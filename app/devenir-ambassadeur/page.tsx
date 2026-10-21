@@ -10,7 +10,7 @@ import { API_BASE } from '@/lib/api'
 export const revalidate = 300
 export const metadata: Metadata = {
   title: 'Deviens ambassadeur Prepaxia',
-  description: 'Fais découvrir Prepaxia aux élèves autour de toi et sois rémunéré pour chaque abonnement.',
+  description: 'Fais découvrir Prepaxia aux élèves autour de toi et sois rémunéré sur le premier abonnement de chaque élève.',
 }
 
 interface ConfigPublique {
@@ -38,13 +38,13 @@ export default async function DevenirAmbassadeur() {
         <h1 className="titre-section">Fais découvrir Prepaxia et sois rémunéré</h1>
         <p className="texte-doux mt-3">
           Enseignant, étudiant, responsable d’un groupe ou d’une page : partage ton lien, les élèves s’inscrivent avec ton code,
-          et tu gagnes une commission sur chaque abonnement payé.
+          et tu gagnes une commission sur le premier abonnement payé de chaque élève.
         </p>
       </div>
       {c ? (
         <div className="carte p-6 sm:p-8 space-y-2">
           <p className="font-bold text-lg">Comment tu es rémunéré</p>
-          <p>• {c.regle}, pendant {c.duree_mois} mois après l’inscription de chaque élève.</p>
+          <p>• {c.regle}, s’il le prend dans les {c.duree_mois} mois qui suivent son inscription. Ses abonnements suivants (en même temps, pendant un abonnement en cours ou après expiration) ne donnent pas de commission.</p>
           <p>• Chaque gain est validé après {c.delai_validation_jours} jours, puis versé par Mobile Money dès {fcfa(c.seuil_versement_fcfa)}.</p>
           {c.paliers.map((p) => <p key={p.abonnes}>• Bonus de {fcfa(p.bonus_fcfa)} à {p.abonnes} abonnés.</p>)}
           <p>• Tu suis tes inscrits, tes gains et tes versements dans ton espace ambassadeur.</p>
