@@ -132,6 +132,36 @@ export default async function Accueil() {
         </section>
       )}
 
+      {/* ── Tuteurs IA (2026-10-22) ───────────────────────────────────── */}
+      {(contenu.tuteurs_ia ?? []).length > 0 && (
+        <section id="tuteurs-ia" className="conteneur scroll-mt-24 py-16">
+          <p className="surtitre">Tuteurs IA</p>
+          <h2 className="titre-section max-w-3xl">{contenu.tuteurs_titre || 'Des tuteurs IA qui te font progresser'}</h2>
+          {contenu.tuteurs_sous_titre && (
+            <p className="mt-4 max-w-3xl leading-relaxed texte-doux">{contenu.tuteurs_sous_titre}</p>
+          )}
+          <div className="mt-10 grid gap-5 lg:grid-cols-3">
+            {(contenu.tuteurs_ia ?? []).map((t) => (
+              <article key={t.titre} className="carte flex flex-col p-6">
+                <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-bleu text-white shadow-doux">
+                  <Icone nom={t.icone} />
+                </span>
+                <h3 className="mt-4 text-lg font-bold">{t.titre}</h3>
+                {t.texte && <p className="mt-1.5 text-sm leading-relaxed texte-doux">{t.texte}</p>}
+                {(t.points ?? '').trim() && (
+                  <ul className="mt-4 space-y-2 text-sm">
+                    {(t.points ?? '').split('\n').map((p) => p.trim()).filter(Boolean).map((p) => (
+                      <li key={p} className="flex gap-2"><Check size={16} className="mt-0.5 shrink-0 text-bleu" />{p}</li>
+                    ))}
+                  </ul>
+                )}
+              </article>
+            ))}
+          </div>
+          {contenu.tuteurs_note && <p className="mt-4 text-sm texte-doux">{contenu.tuteurs_note}</p>}
+        </section>
+      )}
+
       {/* ── Comment ça marche ─────────────────────────────────────────── */}
       {contenu.etapes.length > 0 && (
         <section className="conteneur py-16">
@@ -273,8 +303,9 @@ export default async function Accueil() {
             Ta préparation tient dans ton téléphone.
           </h2>
           <p className="mt-4 max-w-xl text-white/85">
-            Installe Prepaxia, choisis ton concours et commence en quelques minutes. Sept jours
-            Premium offerts à l&apos;inscription.
+            {/* (2026-10-22) L'essai n'est pas un Premium : chapitres choisis, une fois par appareil. */}
+            Installe Prepaxia, choisis ton concours et commence en quelques minutes. Essai gratuit de
+            7 jours, une seule fois par appareil, valable dans tous les concours et examens.
           </p>
           <div className="mt-8 [&_.bouton-neutre]:bg-white/10 [&_.bouton-neutre]:text-white [&_.bouton-neutre]:border-white/30 [&_.bouton]:bg-white [&_.bouton]:text-bleu-fonce">
             <BoutonsStores liens={liens} urlAppWeb={contenu.url_app_web} />

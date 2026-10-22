@@ -12,6 +12,7 @@ import { lienAndroid, type Liens } from '@/lib/api'
 const NAV = [
   { href: '/concours', label: 'Concours' },
   { href: '/#fonctionnalites', label: 'Fonctionnalités' },
+  { href: '/#tuteurs-ia', label: 'Tuteurs IA' },   // (2026-10-22)
   { href: '/#tarifs', label: 'Tarifs' },
   { href: '/journal', label: 'Journal' },
   { href: '/cgu', label: 'CGU' },

@@ -33,6 +33,8 @@ async function lire<T>(chemin: string, repli: T): Promise<T> {
 }
 
 export interface Fonctionnalite { icone: string; titre: string; texte: string }
+/** (2026-10-22) Carte « tuteur IA » : `points` = une compétence par ligne. */
+export interface TuteurIa { icone: string; titre: string; texte: string; points?: string }
 export interface Etape { titre: string; texte: string }
 export interface Temoignage { nom: string; role?: string; texte: string; photo?: string }
 export interface QuestionFaq { question: string; reponse: string }
@@ -44,6 +46,11 @@ export interface ContenuSite {
   hero_sous_titre: string
   url_app_web: string
   fonctionnalites: Fonctionnalite[]
+  /** (2026-10-22) Section « Tuteurs IA » (Prepaxia AI, Corrector, Generator). */
+  tuteurs_titre?: string
+  tuteurs_sous_titre?: string
+  tuteurs_ia?: TuteurIa[]
+  tuteurs_note?: string
   etapes: Etape[]
   temoignages: Temoignage[]
   faq: QuestionFaq[]
