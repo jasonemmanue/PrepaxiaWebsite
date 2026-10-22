@@ -56,3 +56,9 @@ documente les règles et les pièges.
 - `app/api/partenaires/[...chemin]/route.ts` : relais vers l'API, **liste blanche** de chemins, corps ≤ 20 Ko,
   `X-Visiteur-Ip`. `API_BASE` exporté par `lib/api.ts`. `robots.ts` : `/a/`, `/ambassadeur/`, `/api/` exclus.
 - Lien « Devenir ambassadeur » dans le pied de page et le plan du site.
+
+## 2026-10-22 : tuteurs IA
+- Accueil : section `#tuteurs-ia` (« Tuteurs IA ») après les fonctionnalités : `tuteurs_titre`, `tuteurs_sous_titre`,
+  cartes `tuteurs_ia` (`points` découpés par ligne en liste cochée), `tuteurs_note` ; masquée si la liste est vide.
+  Lien « Tuteurs IA » dans l'en-tête. Appel final : l'essai est décrit justement (7 jours, une fois par appareil,
+  tous les concours et examens) ; plus de « Premium offerts à l'inscription ».
