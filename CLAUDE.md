@@ -132,14 +132,15 @@ mettre `.apparition` dans un composant client qui se redessine (React effacerait
 - Vérifié à 360, 768 et 1 280 px : aucun débordement horizontal, aucun texte superposé (contrôle des
   rectangles de tous les textes dans le navigateur).
 
-**Infos fausses repérées dans l'admin (Site web), à corriger par l'exploitant**
-- `hero_sous_titre` cite INPHB, ESATIC et ENS, qui ne sont pas préparés (seuls : BAC, ENSEA ISECL/AS,
-  ISE Économie, ISE Maths).
-- `suppression_compte` : « onglet Profil, puis Sécurité » → depuis la 1.17.49 : Moi → Paramètres → Sécurité.
-- Plans (admin, Modèle économique) : `avantages` « SnapCorrect illimité », « Économie de 17 % vs mensuel »
-  (vraies économies : −8 % trimestriel, −17 % annuel), essai « Tout Quelques avantages Premium 7 jours » ;
-  descriptions « économisez 7,7 % » et « 8,33 % ». Le site ne les affiche plus.
-- Matières : « MATHEMATIQUES » en capitales (ISE Maths), doublons « Mathématiques » au BAC.
-- Variable Railway `SITE_URL` = `https://prepaxiawebsite-production.up.railway.app` alors que le
-  domaine est `www.prepaxia.com` (Open Graph, plan du site) : à passer à `https://www.prepaxia.com`.
-
+**Infos fausses de l'admin, corrigées le 23/10 à la demande de l'exploitant** (depuis sa session admin,
+par `PUT /admin/site/contenu` et `PUT /admin/modele/plans/{id}`, prix et durées renvoyés à l'identique)
+- `hero_sous_titre` : seuls BAC, ENSEA ISECL/AS, ISE Économie, ISE Maths (plus d'INPHB, ESATIC, ENS).
+- `suppression_compte` : Moi → Paramètres → Sécurité ; `a_propos`, `cgu`, `confidentialite` :
+  « (Moi, Paramètres, Assistance) » au lieu de « (Profil, Assistance) ».
+- Plans : « Prepaxia Corrector (avec les crédits) » au lieu de « SnapCorrect illimité » ; économies
+  « 8 % par mois » (trimestriel) et « 17 % par mois » (annuel) ; « +5 utilisations IA » remplacé par les
+  crédits offerts (175, 250) ; essai : « Chapitres choisis par l'équipe… pendant 7 jours ».
+- Variable Railway `SITE_URL` = `https://www.prepaxia.com`.
+- Reste (non signalé comme faux, à voir par l'exploitant) : description du Premium Bac Annuel
+  « 1000 XOF » alors que le prix payé est 1 153 FCFA (crédits offerts compris) ; « MATHEMATIQUES » en
+  capitales (ISE Maths) ; doublons « Mathématiques » au BAC.

@@ -65,8 +65,7 @@ git push origin main           # garder GitHub à jour
 - Le service est **relié au dépôt GitHub** : un `git push` sur `main` relance lui aussi un
   déploiement (même code que `railway up` ; le dernier terminé reste en ligne).
 - **Variables** du service : `API_URL=https://prepaxia-api-production.up.railway.app`
-  (sans `/api/v1`) et `SITE_URL=https://www.prepaxia.com` (au 23/10, `SITE_URL` vaut encore
-  l'ancienne adresse Railway : à corriger dans Railway, voir CLAUDE.md).
+  (sans `/api/v1`) et `SITE_URL=https://www.prepaxia.com` (corrigée le 23/10).
 - Domaine : **Settings → Networking → Custom Domain** (CNAME chez le registrar),
   puis mettre à jour `SITE_URL` et redéployer.
 
