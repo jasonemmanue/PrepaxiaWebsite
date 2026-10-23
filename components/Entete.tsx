@@ -2,84 +2,95 @@
 
 import Image from 'next/image'
 import Link from 'next/link'
-import { useState } from 'react'
-import { Menu, X } from 'lucide-react'
+import { useEffect, useState } from 'react'
+import { Download, Menu, X } from 'lucide-react'
 import BasculeTheme from './BasculeTheme'
-import { lienAndroid, type Liens } from '@/lib/api'
+import BadgesStores from './BadgesStores'
+import type { LiensTelechargement } from '@/lib/api'
 
-// Pages réelles en tête (2026-10-01) : concours ouverts (admin), CGU,
-// confidentialité, puis les ancres de l'accueil.
+// (2026-10-23) En-tête en verre, comme la barre du haut de l'app (≥ 1024 px) ; menu plein
+// en dessous, avec les trois badges de téléchargement. CGU et confidentialité : pied de page.
 const NAV = [
-  { href: '/concours', label: 'Concours' },
   { href: '/#fonctionnalites', label: 'Fonctionnalités' },
-  { href: '/#tuteurs-ia', label: 'Tuteurs IA' },   // (2026-10-22)
+  { href: '/#interfaces', label: 'Interfaces' },
+  { href: '/#tuteurs-ia', label: 'Tuteurs IA' },
   { href: '/#tarifs', label: 'Tarifs' },
-  { href: '/journal', label: 'Journal' },
-  { href: '/cgu', label: 'CGU' },
-  { href: '/confidentialite', label: 'Confidentialité' },
+  { href: '/concours', label: 'Concours' },
+  { href: '/#faq', label: 'FAQ' },
 ]
 
-/** Application web : lien de l'admin (« Site web »), sinon le vrai domaine. */
-const APP_WEB_DEFAUT = 'https://www.webapp.prepaxia.com/'
-
-
-export default function Entete({ urlAppWeb, liens }: { urlAppWeb: string; liens: Liens }) {
+export default function Entete({ liens, avecJournal }: { liens: LiensTelechargement; avecJournal: boolean }) {
   const [ouvert, setOuvert] = useState(false)
-  const telecharger = lienAndroid(liens)
-  const appStore = liens.appstore_url || null
-  const web = urlAppWeb || APP_WEB_DEFAUT
+  const [defile, setDefile] = useState(false)
+  const nav = avecJournal ? [...NAV, { href: '/journal', label: 'Journal' }] : NAV
 
+  useEffect(() => {
+    const surDefilement = () => setDefile(window.scrollY > 8)
+    surDefilement()
+    window.addEventListener('scroll', surDefilement, { passive: true })
+    return () => window.removeEventListener('scroll', surDefilement)
+  }, [])
+
+  useEffect(() => {
+    if (!ouvert) return
+    const echap = (e: KeyboardEvent) => e.key === 'Escape' && setOuvert(false)
+    window.addEventListener('keydown', echap)
+    return () => window.removeEventListener('keydown', echap)
+  }, [ouvert])
+
+  const fond = defile || ouvert
   return (
-    <header className="sticky top-0 z-40 border-b bord backdrop-blur-xl entete-fond">
-      <div className="conteneur flex h-16 items-center gap-6">
-        <Link href="/" className="flex items-center gap-2.5 font-extrabold text-lg">
-          <Image src="/logo.png" alt="" width={34} height={34} className="rounded-xl" priority />
+    <header
+      className={`sticky top-0 z-50 transition-[background-color,box-shadow,border-color] duration-300 ${
+        fond ? 'border-b border-filet/70 bg-fond/80 shadow-doux backdrop-blur-xl' : 'border-b border-transparent'
+      }`}
+    >
+      <div className="conteneur flex h-16 items-center gap-4">
+        <Link href="/" className="flex shrink-0 items-center gap-2.5 text-lg font-bold" onClick={() => setOuvert(false)}>
+          <Image src="/logo.png" alt="" width={36} height={36} className="rounded-[10px]" priority />
           Prepaxia
         </Link>
-        <nav className="hidden flex-1 justify-center gap-7 text-sm font-medium md:flex">
-          {NAV.map((n) => (
-            <Link key={n.href} href={n.href} className="texte-doux hover:text-bleu dark:hover:text-bleu-clair">
+        <nav className="hidden flex-1 items-center justify-center gap-6 text-sm font-medium lg:flex" aria-label="Navigation principale">
+          {nav.map((n) => (
+            <Link key={n.href} href={n.href}
+              className="group relative py-2 texte-doux transition-colors hover:text-ink">
               {n.label}
+              <span className="absolute inset-x-0 -bottom-0.5 h-0.5 origin-left scale-x-0 rounded-full bg-marque transition-transform duration-300 group-hover:scale-x-100" />
             </Link>
           ))}
         </nav>
         <div className="ml-auto flex items-center gap-2">
           <BasculeTheme />
-          {telecharger && (
-            <a href={telecharger} className="bouton hidden !py-2 !px-3 text-xs lg:inline-flex">
-              Play Store
-            </a>
-          )}
-          {appStore && (
-            <a href={appStore} className="bouton-neutre hidden !py-2 !px-3 text-xs lg:inline-flex">
-              App Store
-            </a>
-          )}
-          <a href={web} className="bouton-neutre hidden !py-2 !px-3 text-xs sm:inline-flex">
-            Continuer sur le web
-          </a>
+          <Link href="/#telecharger" className="bouton hidden !rounded-xl !px-4 !py-2 text-sm sm:inline-flex">
+            <Download size={16} /> Télécharger
+          </Link>
           <button
-            className="md:hidden rounded-xl p-2 texte-doux"
+            className="rounded-xl p-2 texte-doux transition-colors hover:text-ink lg:hidden"
             onClick={() => setOuvert((v) => !v)}
+            aria-expanded={ouvert}
+            aria-controls="menu-mobile"
             aria-label={ouvert ? 'Fermer le menu' : 'Ouvrir le menu'}
           >
-            {ouvert ? <X size={22} /> : <Menu size={22} />}
+            {ouvert ? <X size={24} /> : <Menu size={24} />}
           </button>
         </div>
       </div>
-      {ouvert && (
-        <nav className="conteneur flex flex-col gap-1 pb-4 md:hidden">
-          {NAV.map((n) => (
-            <Link key={n.href} href={n.href} onClick={() => setOuvert(false)}
-              className="rounded-xl px-3 py-2.5 font-medium hover:bg-bleu/10">
-              {n.label}
-            </Link>
-          ))}
-          {telecharger && <a href={telecharger} className="bouton mt-2">Télécharger sur le Play Store</a>}
-          {appStore && <a href={appStore} className="bouton-neutre mt-2">Télécharger sur l&apos;App Store</a>}
-          <a href={web} className="bouton-neutre mt-2">Continuer sur le web</a>
-        </nav>
-      )}
+      <div
+        id="menu-mobile"
+        className={`grid transition-[grid-template-rows] duration-300 ease-out lg:hidden ${ouvert ? 'grid-rows-[1fr]' : 'grid-rows-[0fr]'}`}
+      >
+        <div className="overflow-hidden">
+          <nav className="conteneur flex flex-col gap-1 pb-6 pt-2" aria-label="Menu">
+            {nav.map((n) => (
+              <Link key={n.href} href={n.href} onClick={() => setOuvert(false)} tabIndex={ouvert ? 0 : -1}
+                className="rounded-xl px-3 py-3 font-medium transition-colors hover:bg-releve">
+                {n.label}
+              </Link>
+            ))}
+            <BadgesStores liens={liens} className="mt-4 px-1" />
+          </nav>
+        </div>
+      </div>
     </header>
   )
 }

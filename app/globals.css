@@ -2,58 +2,195 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Clair : blanc bleuté ; sombre : bleu roi nuit — comme l'application. */
+/* (2026-10-23) Charte graphique de l'app : rôles de couleur en canaux RVB (voir
+   tailwind.config.ts). Clair ici, sombre (thème par défaut, comme l'app) sous .dark. */
 :root {
-  --fond: #f4f7ff;
-  --surface: #ffffff;
-  --texte: #0b1640;
-  --texte-doux: #3b4a74;
-  --bord: #d9e1f5;
+  --fond: 245 247 255;          /* #F5F7FF */
+  --surface: 255 255 255;
+  --releve: 235 239 253;        /* #EBEFFD */
+  --filet: 211 218 245;         /* #D3DAF5 */
+  --ink: 15 26 74;              /* #0F1A4A */
+  --ink-doux: 74 86 137;        /* #4A5689 */
+  --ink-discret: 95 106 153;    /* #5F6A99 */
+  --lien: 36 73 201;            /* #2449C9 */
+  --ambre-ink: 163 95 0;        /* #A35F00 */
+  --p-apprendre: 23 105 184;    /* #1769B8 */
+  --p-entrainer: 163 95 0;      /* #A35F00 */
+  --p-ia: 122 85 224;           /* #7A55E0 */
+  --p-communaute: 194 56 122;   /* #C2387A */
+  --verre: linear-gradient(135deg, rgb(255 255 255 / 0.92), rgb(255 255 255 / 0.72));
+  --verre-lisere: rgb(255 255 255 / 0.9);
+  --halo-1: rgb(47 91 234 / 0.10);
+  --halo-2: rgb(124 196 255 / 0.16);
+  color-scheme: light;
 }
 .dark {
-  --fond: #061446;
-  --surface: #0c1f63;
-  --texte: #f2f6ff;
-  --texte-doux: #b4c3ee;
-  --bord: #22397f;
+  --fond: 10 18 56;             /* #0A1238 */
+  --surface: 18 28 77;          /* #121C4D */
+  --releve: 28 40 96;           /* #1C2860 */
+  --filet: 44 58 120;           /* #2C3A78 */
+  --ink: 244 246 255;           /* #F4F6FF */
+  --ink-doux: 167 182 236;      /* #A7B6EC */
+  --ink-discret: 126 140 196;   /* #7E8CC4 */
+  --lien: 157 182 255;          /* #9DB6FF */
+  --ambre-ink: 255 181 70;      /* #FFB546 */
+  --p-apprendre: 124 196 255;   /* #7CC4FF */
+  --p-entrainer: 255 181 70;    /* #FFB546 */
+  --p-ia: 183 156 255;          /* #B79CFF */
+  --p-communaute: 255 143 192;  /* #FF8FC0 */
+  /* Verre liquide des maquettes : voile blanc 13 % → 3 % → 6 % sur bleu nuit à 52 %. */
+  --verre: linear-gradient(135deg, rgb(255 255 255 / 0.13), rgb(255 255 255 / 0.03) 55%, rgb(255 255 255 / 0.06)),
+    rgb(10 18 56 / 0.52);
+  --verre-lisere: rgb(255 255 255 / 0.16);
+  --halo-1: rgb(47 91 234 / 0.22);
+  --halo-2: rgb(29 64 192 / 0.28);
+  color-scheme: dark;
 }
 
-html { scroll-behavior: smooth; }
-body { background: var(--fond); color: var(--texte); }
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+body {
+  background: rgb(var(--fond));
+  color: rgb(var(--ink));
+  overflow-x: clip;
+}
+/* Fond fixe à halos, comme l'app (aucune animation : fluide sur les petits téléphones). */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    radial-gradient(40rem 32rem at 8% -6%, var(--halo-1), transparent 70%),
+    radial-gradient(36rem 30rem at 100% 18%, var(--halo-2), transparent 70%),
+    radial-gradient(34rem 28rem at 0% 75%, var(--halo-2), transparent 70%),
+    radial-gradient(40rem 30rem at 92% 100%, var(--halo-1), transparent 70%);
+}
+::selection { background: rgb(47 91 234 / 0.35); }
+:focus-visible { outline: 2px solid rgb(var(--lien)); outline-offset: 2px; border-radius: 6px; }
 
 @layer components {
-  .conteneur { @apply mx-auto w-full max-w-6xl px-5 sm:px-8; }
+  .conteneur { @apply mx-auto w-full max-w-site px-4 sm:px-6 lg:px-8; }
+  .section { @apply py-12 sm:py-16 lg:py-20; }
   .carte {
-    background: var(--surface);
-    border: 1px solid var(--bord);
+    background: rgb(var(--surface));
+    border: 1px solid rgb(var(--filet));
     @apply rounded-3xl;
   }
-  .texte-doux { color: var(--texte-doux); }
-  .bord { border-color: var(--bord); }
-  .surtitre { @apply text-xs font-bold uppercase tracking-[0.18em] text-bleu dark:text-bleu-clair; }
-  .titre-section { @apply mt-3 text-3xl font-extrabold leading-tight sm:text-4xl; }
-  /* Bouton « 3D » : même grammaire que l'application (aplat + tranche). */
+  .verre {
+    background: var(--verre);
+    border: 1px solid rgb(var(--filet) / 0.9);
+    box-shadow: inset 1.5px 1.5px 0 var(--verre-lisere), 0 24px 60px -32px rgb(10 18 56 / 0.6);
+    @apply rounded-3xl backdrop-blur-md;
+  }
+  .texte-doux { color: rgb(var(--ink-doux)); }
+  .texte-discret { color: rgb(var(--ink-discret)); }
+  .bord { border-color: rgb(var(--filet)); }
+  .surtitre { @apply text-xs font-semibold uppercase tracking-[0.14em] text-lien; }
+  .titre-section { @apply mt-3 text-[1.75rem] font-bold leading-[1.15] tracking-tight sm:text-4xl lg:text-[2.6rem]; }
+  .chapo { @apply mt-4 max-w-2xl text-base leading-relaxed sm:text-lg; color: rgb(var(--ink-doux)); }
+  /* Bouton principal : aplat bleu Prepaxia + tranche, même grammaire que Bouton3D de l'app. */
   .bouton {
-    @apply inline-flex items-center justify-center gap-2 rounded-2xl bg-bleu px-6 py-3.5 font-bold text-white transition active:translate-y-[3px];
-    box-shadow: 0 4px 0 #0234c4, 0 14px 24px -12px rgba(15, 79, 224, 0.6);
+    @apply inline-flex items-center justify-center gap-2 rounded-2xl bg-marque px-6 py-3.5 font-semibold text-white transition duration-200 hover:brightness-110 active:translate-y-[3px];
+    box-shadow: 0 4px 0 #1d40c0, 0 16px 28px -14px rgb(47 91 234 / 0.75);
   }
-  .bouton:active { box-shadow: 0 1px 0 #0234c4; }
+  .bouton:active { box-shadow: 0 1px 0 #1d40c0; }
   .bouton-neutre {
-    background: var(--surface);
-    border: 1px solid var(--bord);
-    @apply inline-flex items-center justify-center gap-2 rounded-2xl px-6 py-3.5 font-bold transition hover:border-bleu;
+    background: rgb(var(--releve) / 0.7);
+    border: 1px solid rgb(var(--filet));
+    @apply inline-flex items-center justify-center gap-2 rounded-2xl px-6 py-3.5 font-semibold transition duration-200 hover:border-marque;
+  }
+  /* Tuile d'icône d'un pilier : la couleur du pilier sur sa teinte à 16 %. */
+  .tuile { @apply flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl; background: color-mix(in srgb, currentColor 16%, transparent); }
+  .pastille {
+    background: rgb(var(--releve) / 0.8);
+    border: 1px solid rgb(var(--filet));
+    @apply inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-medium;
   }
 }
 
-/* Vagues animées du héros, comme le fond de l'application. */
-@keyframes vague {
-  0%, 100% { transform: translate(0, 0) rotate(0deg); }
-  50% { transform: translate(18px, -14px) rotate(4deg); }
+/* ── Badges officiels des stores (règles de Google et d'Apple) ──────────────────
+   Fond noir, liseré gris #A6A6A6, coins arrondis, logo à gauche, deux lignes de texte,
+   même hauteur pour tous les badges, jamais déformés ni recolorés. */
+.badge-store {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  height: 3rem;
+  padding: 0 1rem 0 0.8rem;
+  border-radius: 0.6rem;
+  background: #000;
+  border: 1px solid #a6a6a6;
+  color: #fff;
+  line-height: 1;
+  white-space: nowrap;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
-.vague { animation: vague 18s ease-in-out infinite; }
-.vague-lente { animation: vague 26s ease-in-out infinite reverse; }
-@media (prefers-reduced-motion: reduce) {
-  .vague, .vague-lente { animation: none; }
+.badge-store:hover { transform: translateY(-2px); box-shadow: 0 14px 26px -14px rgb(0 0 0 / 0.7); }
+.badge-store svg { flex-shrink: 0; }
+.badge-store small { display: block; font-size: 0.6rem; letter-spacing: 0.02em; margin-bottom: 0.2rem; }
+.badge-store strong { display: block; font-size: 1.15rem; font-weight: 500; letter-spacing: -0.01em; }
+.badge-google { font-family: Roboto, 'Helvetica Neue', Arial, sans-serif; }
+.badge-google small { text-transform: uppercase; }
+.badge-apple { font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Arial, sans-serif; }
+.badge-apple strong { font-size: 1.2rem; font-weight: 600; letter-spacing: -0.02em; }
+@media (max-width: 380px) {
+  .badge-store { height: 2.75rem; padding: 0 0.8rem 0 0.65rem; gap: 0.5rem; }
+  .badge-store strong { font-size: 1.02rem; }
+  .badge-apple strong { font-size: 1.06rem; }
 }
 
-.entete-fond { background: color-mix(in srgb, var(--fond) 82%, transparent); }
+/* ── Images selon le thème (visuels sombres / clairs des stores) ── */
+.visuel-clair { display: none; }
+html:not(.dark) .visuel-clair { display: block; }
+html:not(.dark) .visuel-sombre { display: none; }
+/* Bords fondus : l'image se mêle au fond de la page, sans cadre. */
+.fondu {
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 7%, #000 93%, transparent), linear-gradient(180deg, transparent, #000 9%, #000 91%, transparent);
+  -webkit-mask-composite: source-in;
+  mask-image: linear-gradient(90deg, transparent, #000 7%, #000 93%, transparent), linear-gradient(180deg, transparent, #000 9%, #000 91%, transparent);
+  mask-composite: intersect;
+}
+
+/* ── Animations ─────────────────────────────────────────────────────────────── */
+/* Apparition au défilement : seulement quand le JavaScript tourne (classe « js » posée
+   par le script du thème), sinon tout reste visible. */
+html.js .apparition {
+  opacity: 0;
+  transform: translateY(26px);
+  transition: opacity 0.75s cubic-bezier(0.2, 0.7, 0.2, 1), transform 0.75s cubic-bezier(0.2, 0.7, 0.2, 1);
+  transition-delay: var(--delai, 0ms);
+}
+html.js .apparition.vu { opacity: 1; transform: none; }
+
+@keyframes flotter { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-12px); } }
+.flotte { animation: flotter 7s ease-in-out infinite; }
+.flotte-lente { animation: flotter 9s ease-in-out infinite; animation-delay: -3s; }
+
+@keyframes defiler { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+.defile { animation: defiler 48s linear infinite; }
+.bande-defilante:hover .defile { animation-play-state: paused; }
+.bande-defilante {
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+}
+
+@keyframes respirer { 0%, 100% { opacity: 0.55; transform: scale(1); } 50% { opacity: 0.9; transform: scale(1.08); } }
+.respire { animation: respirer 8s ease-in-out infinite; }
+
+/* Entrée des cartes quand on change d'onglet (galerie, tarifs). */
+@keyframes entrer { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+.entree { animation: entrer 0.55s cubic-bezier(0.2, 0.7, 0.2, 1) both; }
+
+@keyframes tourner { to { transform: rotate(360deg); } }
+.tourne { animation: tourner 26s linear infinite; }
+
+/* Barre de défilement masquée pour les galeries (le défilement reste au doigt et aux flèches). */
+.sans-barre { scrollbar-width: none; }
+.sans-barre::-webkit-scrollbar { display: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  html.js .apparition { opacity: 1; transform: none; transition: none; }
+  .flotte, .flotte-lente, .defile, .respire, .tourne, .entree { animation: none; }
+}

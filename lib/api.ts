@@ -107,10 +107,36 @@ export interface Article {
 
 export interface Plan {
   id: string
+  code?: string
   nom: string
   prix_fcfa: number
   duree_jours?: number
   avantages?: string[]
+  prix_mensuel_fcfa?: number
+  populaire?: boolean
+  presentation?: { texte_court?: string; badge?: string; mise_en_avant?: boolean }
+}
+
+/** (2026-10-23) Liens de l'application réglés dans l'admin (Contact et liens de partage /
+ *  Mise à jour de l'application), lus dans `GET /app/version`. Jamais écrits par le site. */
+export interface VersionApp {
+  derniere_version?: string
+  url_android?: string
+  url_ios?: string
+  url_web_app?: string
+  url_site?: string
+}
+
+/** (2026-10-23) Grille des forfaits (`GET /subscriptions/grille`), calculée par l'API depuis
+ *  le modèle économique : `avantages_reels` = liste exacte de chaque formule, par cible. */
+export interface LigneGrille { libelle: string; detail?: string; gratuit: string; premium: string; par_plan?: Record<string, string> }
+export interface Grille {
+  titre?: string
+  sous_titre?: string
+  note?: string
+  categories: { titre: string; lignes: LigneGrille[] }[]
+  formule_gratuite?: { nom?: string; avantages?: string[] } | null
+  avantages_reels?: Record<string, string[]>
 }
 
 export const CONTENU_VIDE: ContenuSite = {
@@ -143,8 +169,35 @@ export const lireArticles = (limite = 20) => lire<Article[]>(`/site/articles?lim
 export const lireArticle = (slug: string) =>
   lire<Article | null>(`/site/articles/${encodeURIComponent(slug)}`, null)
 export const lirePlans = () => lire<Plan[]>('/site/plans', [])
+export const lireVersion = () => lire<VersionApp>('/app/version', {})
+export const lireGrille = (concoursId?: string) =>
+  lire<Grille>(`/subscriptions/grille${concoursId ? `?concours_id=${encodeURIComponent(concoursId)}` : ''}`,
+    { categories: [] })
 
-/** Lien de téléchargement Android : Play Store s'il existe, sinon l'APK. */
-export function lienAndroid(l: Liens): string | null {
-  return l.playstore_url || l.apk_url || null
+/** (2026-10-23) Liens de DÉMONSTRATION, affichés tant que l'exploitant n'a pas posé le vrai
+ *  lien dans l'admin (Contact et liens de partage). Le site ne les écrit jamais en base. */
+export const LIENS_DEMO = {
+  android: 'https://play.google.com/store/apps/details?id=com.prepaxia.app',
+  ios: 'https://apps.apple.com/',
+  web: 'https://www.webapp.prepaxia.com/',
 }
+
+export interface LiensTelechargement { android: string; ios: string; web: string }
+
+/** Les trois boutons de téléchargement : liens de `/app/version`, sinon démonstration. */
+export function liensTelechargement(v: VersionApp, urlAppWeb?: string): LiensTelechargement {
+  const propre = (u?: string | null) => (u || '').trim()
+  return {
+    android: propre(v.url_android) || LIENS_DEMO.android,
+    ios: propre(v.url_ios) || LIENS_DEMO.ios,
+    web: propre(v.url_web_app) || propre(urlAppWeb) || LIENS_DEMO.web,
+  }
+}
+
+/** Nom saisi dans l'admin, rendu propre à l'affichage : espaces doublés, « _ », « ENSEA(ISE) ». */
+export function nomPropre(t: string): string {
+  return (t || '').replace(/_/g, '-').replace(/(\S)\(/g, '$1 (').replace(/\s+/g, ' ').trim()
+}
+
+/** Le BAC (règles à part : formules `bac…`, pas de Corrector ni de Generator). */
+export const estBac = (c: Concours) => c.slug.toLowerCase() === 'bac' || /^bac(\s|$)/i.test(c.nom.trim())

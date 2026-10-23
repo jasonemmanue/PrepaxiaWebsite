@@ -10,9 +10,9 @@
 import type { Metadata } from 'next'
 import { headers } from 'next/headers'
 import Link from 'next/link'
-import { Apple, Globe, Smartphone } from 'lucide-react'
+import { BadgeAppStore, BadgeGooglePlay, BadgeWeb } from '@/components/BadgesStores'
 import CopierCode from '@/components/partenaires/CopierCode'
-import { API_BASE, lireLiens } from '@/lib/api'
+import { API_BASE, liensTelechargement, lireContenu, lireVersion } from '@/lib/api'
 
 export const dynamic = 'force-dynamic'
 export const metadata: Metadata = {
@@ -39,8 +39,10 @@ async function verifier(code: string): Promise<Reponse> {
 
 export default async function LienAmbassadeur({ params }: { params: { code: string } }) {
   const code = decodeURIComponent(params.code || '')
-  const [r, liens] = await Promise.all([verifier(code), lireLiens()])
+  const [r, version, contenu] = await Promise.all([verifier(code), lireVersion(), lireContenu()])
   const valide = r.valide && r.code && r.liens
+  // (2026-10-23) Liens de `/app/version` (admin), sinon démonstration ; ceux de l'API pour un code valide.
+  const liens = liensTelechargement(version, contenu.url_app_web)
   return (
     <section className="conteneur max-w-2xl py-14 sm:py-20">
       <div className="carte p-7 sm:p-10 text-center">
@@ -69,17 +71,10 @@ export default async function LienAmbassadeur({ params }: { params: { code: stri
           compte, dans l’app iPhone / iPad.
         </p>
 
-        <div className="mt-6 flex flex-col gap-3 sm:items-center">
-          <a href={valide ? r.liens!.android : (liens.playstore_url || 'https://play.google.com/store/apps/details?id=com.prepaxia.app')}
-            className="bouton w-full sm:w-80">
-            <Smartphone size={20} /> Télécharger sur Google Play
-          </a>
-          {liens.appstore_url && (
-            <a href={liens.appstore_url} className="bouton-neutre w-full sm:w-80"><Apple size={20} /> Télécharger sur l’App Store</a>
-          )}
-          <a href={valide ? r.liens!.web : 'https://www.webapp.prepaxia.com/'} className="bouton-neutre w-full sm:w-80">
-            <Globe size={20} /> Continuer sur le web
-          </a>
+        <div className="mt-6 flex flex-wrap justify-center gap-3">
+          <BadgeGooglePlay href={valide ? r.liens!.android : liens.android} />
+          <BadgeAppStore href={liens.ios} />
+          <BadgeWeb href={valide ? r.liens!.web : liens.web} />
         </div>
 
         {!valide && code && (

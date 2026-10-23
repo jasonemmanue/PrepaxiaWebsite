@@ -1,11 +1,12 @@
 import TexteLong from './TexteLong'
 
-/** Page de texte légal (CGU, confidentialité) éditée depuis l'admin. */
-export default function PageTexte({ titre, texte }: { titre: string; texte: string }) {
+/** Page de texte (CGU, confidentialité, à propos…) éditée depuis l'admin. */
+export default function PageTexte({ titre, texte, surtitre }: { titre: string; texte: string; surtitre?: string }) {
   return (
-    <section className="conteneur max-w-3xl py-16">
-      <h1 className="text-3xl font-extrabold">{titre}</h1>
-      <div className="mt-8">
+    <section className="conteneur max-w-3xl py-12 sm:py-16">
+      {surtitre && <p className="surtitre">{surtitre}</p>}
+      <h1 className="mt-2 text-3xl font-bold tracking-tight sm:text-4xl">{titre}</h1>
+      <div className="carte mt-8 p-6 sm:p-10">
         {texte ? (
           <TexteLong texte={texte} />
         ) : (

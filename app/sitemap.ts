@@ -1,7 +1,7 @@
 import type { MetadataRoute } from 'next'
 import { lireArticles } from '@/lib/api'
 
-const SITE = process.env.SITE_URL || 'https://prepaxia.com'
+const SITE = process.env.SITE_URL || 'https://www.prepaxia.com'
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const articles = await lireArticles(50)

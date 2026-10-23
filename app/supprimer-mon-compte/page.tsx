@@ -1,6 +1,7 @@
 // app/supprimer-mon-compte/page.tsx
 // (2026-10-17) Page publique exigée par Google Play (sécurité des données) :
 // comment demander la suppression de son compte Prepaxia et de ses données.
+// (2026-10-23) Repli à jour de la refonte 1.17.49 : Moi → Paramètres → Sécurité.
 import type { Metadata } from 'next'
 import PageTexte from '@/components/PageTexte'
 import { lireContenu } from '@/lib/api'
@@ -17,7 +18,7 @@ const TEXTE = `Cette page explique comment supprimer ton compte de l'application
 ## 1. Depuis l'application (le plus rapide)
 
 1. Ouvre l'application Prepaxia et connecte-toi.
-2. Va dans l'onglet **Profil**, puis **Sécurité**.
+2. Touche ta photo de profil (ou tes initiales) en haut de l'écran pour ouvrir **Moi**, puis **Paramètres**, puis **Sécurité**.
 3. Touche **Supprimer mon compte**, puis confirme.
 
 Ta session est fermée sur tous tes appareils et ton compte est supprimé aussitôt.
