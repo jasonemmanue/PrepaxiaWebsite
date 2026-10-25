@@ -96,7 +96,8 @@ export default async function Accueil() {
     [stats.lecons ?? 0, 'leçons'],
     [stats.exercices ?? 0, 'exercices corrigés'],
     [stats.annales ?? 0, 'annales'],
-    [stats.heures_utilisation ?? 0, 'heures de révision'],
+    // (2026-10-24) Temps exact (même filtre que l'admin) : « X h Y min » plus bas.
+    [(stats.heures_utilisation ?? 0) * 60 + (stats.minutes_utilisation ?? 0), 'de révision'],
     [stats.inscrits, 'élèves inscrits'],
   ].filter(([n]) => Number(n) > 0) as [number, string][]
   const colonnesChiffres = ['', '', '', 'sm:grid-cols-3 lg:grid-cols-3', 'sm:grid-cols-4 lg:grid-cols-4',
@@ -170,7 +171,11 @@ export default async function Accueil() {
               <div key={l} className="text-center">
                 <dt className="sr-only">{l}</dt>
                 <dd>
-                  <span className="block text-3xl font-bold tracking-tight sm:text-4xl"><Compteur valeur={Number(n)} /></span>
+                  <span className="block text-3xl font-bold tracking-tight sm:text-4xl">
+                    {l === 'de révision'
+                      ? <><Compteur valeur={Math.floor(Number(n) / 60)} /> h {Number(n) % 60} min</>
+                      : <Compteur valeur={Number(n)} />}
+                  </span>
                   <span className="mt-1 block text-sm texte-doux">{l}</span>
                 </dd>
               </div>

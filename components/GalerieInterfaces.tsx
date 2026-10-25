@@ -78,10 +78,10 @@ export default function GalerieInterfaces({ groupes }: { groupes: GroupeGalerie[
       <div
         key={groupe.cle}
         ref={rail}
-        className="sans-barre -mx-4 mt-8 flex snap-x snap-mandatory scroll-px-4 gap-5 overflow-x-auto px-4 pb-4 sm:-mx-6 sm:scroll-px-6 sm:px-6 lg:mx-0 lg:px-0"
+        className="sans-barre -mx-4 mt-8 flex snap-x snap-mandatory scroll-px-4 gap-5 overflow-x-auto px-4 pb-4 sm:-mx-6 sm:scroll-px-6 sm:px-6 lg:mx-0 lg:scroll-px-0 lg:px-0"
       >
         {groupe.items.map((it, i) => (
-          <figure key={it.nom} className={`entree group shrink-0 snap-start ${LARGEURS[groupe.cle]}`}
+          <figure key={it.nom} className={`entree group shrink-0 snap-start last:snap-end ${LARGEURS[groupe.cle]}`}
             style={{ animationDelay: `${i * 70}ms` }}>
             <div className="overflow-hidden rounded-[1.6rem] border bord bg-fond shadow-doux transition duration-500 group-hover:-translate-y-1.5 group-hover:border-marque/60">
               <Visuel nom={`${groupe.cle}-${it.nom}`} format={FORMATS[groupe.cle]} alt={it.titre}

@@ -98,13 +98,14 @@ export default function PiedDePage({ contenu, liens, telechargement, avecJournal
             <li><Link href="/cgu" className={lien}>Conditions d&apos;utilisation</Link></li>
             <li><Link href="/confidentialite" className={lien}>Confidentialité</Link></li>
             <li><Link href="/supprimer-mon-compte" className={lien}>Supprimer mon compte</Link></li>
+            <li><Link href="/cookies" className={lien}>Cookies</Link></li>
+            <li><Link href="/remboursement" className={lien}>Remboursement</Link></li>
           </ul>
         </div>
       </div>
       <div className="border-t bord">
         <div className="conteneur flex flex-col gap-2 py-6 text-xs texte-discret sm:flex-row sm:items-center sm:justify-between">
           <p>© {new Date().getFullYear()} Prepaxia Tech Corporation. Tous droits réservés.</p>
-          <p>Google Play et le logo Google Play sont des marques de Google LLC. Apple, le logo Apple et App Store sont des marques d&apos;Apple Inc.</p>
         </div>
       </div>
     </footer>

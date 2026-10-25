@@ -65,6 +65,9 @@ export interface ContenuSite {
   confidentialite: string
   /** (2026-10-17) Page « Supprimer mon compte » (Google Play). */
   suppression_compte?: string
+  /** (2026-10-24) Pages légales : cookies, remboursement (erreurs seulement). */
+  cookies?: string
+  remboursement?: string
 }
 
 export interface Stats {
@@ -72,6 +75,8 @@ export interface Stats {
   lecons?: number; exercices?: number; annales?: number
   /** Temps total passé dans l'application par les élèves (2026-10-02). */
   heures_utilisation?: number
+  /** (2026-10-24) Minutes au-delà des heures : « X h Y min », comme l'admin. */
+  minutes_utilisation?: number
 }
 
 export interface Matiere { id: string; nom: string; symbole?: string | null }

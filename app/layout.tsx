@@ -4,6 +4,7 @@ import './globals.css'
 import Entete from '@/components/Entete'
 import PiedDePage from '@/components/PiedDePage'
 import { ObservateurApparition } from '@/components/Animations'
+import BandeauCookies from '@/components/BandeauCookies'
 import { liensTelechargement, lireArticles, lireContenu, lireLiens, lireVersion } from '@/lib/api'
 
 // Polices de la charte : Poppins pour l'interface, Atkinson Hyperlegible pour les longs textes.
@@ -66,6 +67,7 @@ export default async function Racine({ children }: { children: React.ReactNode }
         <main id="contenu">{children}</main>
         <PiedDePage contenu={contenu} liens={liens} telechargement={telechargement} avecJournal={avecJournal} />
         <ObservateurApparition />
+        <BandeauCookies />
       </body>
     </html>
   )
