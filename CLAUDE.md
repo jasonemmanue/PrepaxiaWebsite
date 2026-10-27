@@ -144,3 +144,7 @@ par `PUT /admin/site/contenu` et `PUT /admin/modele/plans/{id}`, prix et durées
 - Reste (non signalé comme faux, à voir par l'exploitant) : description du Premium Bac Annuel
   « 1000 XOF » alors que le prix payé est 1 153 FCFA (crédits offerts compris) ; « MATHEMATIQUES » en
   capitales (ISE Maths) ; doublons « Mathématiques » au BAC.
+
+## 2026-10-27 : achats sur l'app web seulement
+- Les apps Android et iPhone ne vendent plus rien (règles des stores). `/a/[code]` : « **Abonnement uniquement sur l'app
+  web** », court. FAQ : `riche()` (exporté de `TexteLong`) rend le `**gras**` des réponses (« Comment payer ? »).
