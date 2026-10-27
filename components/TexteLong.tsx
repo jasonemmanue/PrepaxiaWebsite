@@ -4,7 +4,7 @@
 // (2026-10-05) « **gras** » : morceaux entre doubles astérisques en gras
 // (texte React, jamais de HTML injecté).
 // (2026-10-23) Police de lecture de la charte (Atkinson Hyperlegible), listes numérotées.
-function riche(t: string) {
+export function riche(t: string) {
   return t.split('**').map((morceau, k) => (k % 2 === 1 ? <strong key={k} className="text-ink">{morceau}</strong> : morceau))
 }
 

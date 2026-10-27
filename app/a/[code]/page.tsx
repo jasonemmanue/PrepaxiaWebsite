@@ -65,10 +65,13 @@ export default async function LienAmbassadeur({ params }: { params: { code: stri
           </div>
         )}
 
-        {/* (2026-10-21) iPhone / iPad : aucun achat dans l'app ; l'abonnement se prend sur le web. */}
+        {/* (2026-10-27) Plus aucun achat dans les apps Android et iPhone / iPad (règles de Google Play et d'Apple) :
+            l'abonnement se prend sur l'app web. En gras, demande de l'exploitant. */}
         <p className="mt-6 text-sm texte-doux">
-          Sur iPhone ou iPad, l’abonnement se prend sur le web (« Continuer sur le web ») et s’active aussitôt dans ton
-          compte, dans l’app iPhone / iPad.
+          <strong className="font-bold">
+            L’abonnement se prend uniquement sur l’application web (« Continuer sur le web »).
+          </strong>{" "}
+          Il s’active aussitôt dans ton compte, dans les applications Android et iPhone / iPad.
         </p>
 
         <div className="mt-6 flex flex-wrap justify-center gap-3">

@@ -7,6 +7,7 @@ import { Compteur } from '@/components/Animations'
 import GalerieInterfaces, { type GroupeGalerie } from '@/components/GalerieInterfaces'
 import Icone, { couleurPilier } from '@/components/Icone'
 import Tarifs from '@/components/Tarifs'
+import { riche } from '@/components/TexteLong'
 import Visuel, { FORMATS } from '@/components/Visuel'
 import {
   estBac, liensTelechargement, lireArticles, lireConcours, lireContenu, lireGrille, lireLiens,
@@ -455,7 +456,7 @@ export default async function Accueil() {
                       <ChevronDown size={18} />
                     </span>
                   </summary>
-                  <p className="px-5 pb-5 leading-relaxed texte-doux sm:px-6">{q.reponse}</p>
+                  <p className="px-5 pb-5 leading-relaxed texte-doux sm:px-6">{riche(q.reponse)}</p>
                 </details>
               ))}
             </div>
