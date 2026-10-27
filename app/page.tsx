@@ -386,8 +386,9 @@ export default async function Accueil() {
                 <span className="tuile text-pilier-entrainer"><Gift size={22} /></span>
                 <p className="text-sm leading-relaxed texte-doux sm:text-base">
                   <strong className="text-ink">Essai gratuit de {essai.duree_jours} jours</strong>, une seule fois par
-                  appareil, depuis l&apos;application Android ou iPhone : les chapitres choisis par l&apos;équipe dans
-                  tous les concours et examens, avec des crédits IA offerts les premiers jours.
+                  appareil, depuis l&apos;application Android ou iPhone : le 1er chapitre de chaque matière dans
+                  tous les concours et examens, avec des crédits IA offerts les premiers jours. Formule Classique :
+                  les 3 premiers chapitres de chaque matière ; formules Premium : tous les chapitres.
                 </p>
               </div>
             )}
